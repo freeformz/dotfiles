@@ -6,7 +6,7 @@ typeset -A requirements
 requirements=()
 need=()
 
-[[ $(hostname) =~ "salesforce.com" ]] && situation="work" || situation="home"
+[[ $(hostname) =~ "abc" ]] && situation="work" || situation="home"
 
 if [[ $(uname -s) =~ "Darwin" ]]; then
   SED=gsed
@@ -35,10 +35,9 @@ if [[ $(uname -s) == "Linux" ]]; then
   requirements+=(git "apt-get install git")
 fi
 
-if [[ "${situation}" == "work" ]]; then
-  requirements+=(lpass "brew install lastpass-cli")
-fi
-
+#if [[ "${situation}" == "work" ]]; then
+#  requirements+=(lpass "brew install lastpass-cli")
+#fi
 
 for r in ${(k)requirements}; do
   if ! PATH=/usr/local/bin:$PATH type ${r} >>&/dev/null; then

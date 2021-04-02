@@ -268,6 +268,11 @@ if [ -e /usr/local/bin/heroku ]; then
   alias h='PATH="/usr/local/opt/python@2/bin:$PATH" /usr/local/bin/heroku'
 fi
 
+## codeql
+if [ -d /usr/local/codeql ]; then
+  addPath "/usr/local/codeql"
+fi
+
 ## Misc 
 unalias gb
 alias gcdr="cd $(git rev-parse --show-toplevel)"
