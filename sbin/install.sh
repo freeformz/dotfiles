@@ -1,10 +1,5 @@
 #!/usr/bin/env zsh
 
-EMAIL_WORK=emuller@fastly.com
-KEY_WORK="ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILDDc/726/BtTHZ6+EBCEOvRo2PRTIYzM3v/e48qj+4R emuller@fastly.com"
-EMAIL_HOME=me@freeformz.me
-KEY_HOME=""
-
 set -e
 
 typeset -A requirements
@@ -65,6 +60,7 @@ typeset -A files
 files=(
   zshrc ~/.zshrc
   gitconfig ~/.gitconfig
+  allowed_signers ~/.ssh/allowed_signers
 )
 
 base=$(git rev-parse --show-toplevel)
@@ -73,8 +69,8 @@ source="${base}/source"
 case ${situation} in
   work)
     files[zshrc.work.age]="$HOME/.zshrc.work"
-    export EMAIL=${EMAIL_WORK}
-    export KEY=${KEY_WORK}
+    export EMAIL=emuller@fastly.com
+    export KEY="ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILDDc/726/BtTHZ6+EBCEOvRo2PRTIYzM3v/e48qj+4R emuller@fastly.com"
   ;;
   home)
     export EMAIL=$EMAIL_HOME
@@ -86,16 +82,6 @@ case ${situation} in
 esac
 
 mkdir -p ~/.ssh
-mv ~/.ssh/allowed_signers ~/.ssh/allowed_signers.old
-echo $EMAIL_WORK $KEY_WORK >> ~/.ssh/allowed_signers
-#echo FIXME 4 HOME
-
-#if  ! gpg -k ${KEY} &> /dev/null; then
-#  echo "Missing key in local keychain. Install keybase, then run:"
-#  echo "keybase pgp export -q ${KEY} | gpg --import"
-#  echo "keybase pgp export -q ${KEY} --secret | gpg --import --allow-secret-key-import"
-#  exit 1
-#fi
 
 for f in ${(k)files}; do
   local tgt=${files[$f]}
