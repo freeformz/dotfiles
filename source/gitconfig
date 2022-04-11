@@ -20,3 +20,5 @@
 	cookiefile = __HOME__/.gitcookies
 [commit]
 	gpgsign = true
+[gpg]
+	format = ssh

@@ -101,6 +101,7 @@ addPath() {
 ## Change this if you want to use a different directory
 ## $HOME/sdk is compatible with 
 export gosdk=$HOME/sdk
+mkdir -p ${gosdk}
 
 export goversion
 if [[ -z "${goversion}" ]]; then
@@ -249,6 +250,7 @@ if [[ -z "${goversion}" ]]; then
   echo -e "No Go SDK installed. Install the latest by running: setGoVersion latest"
 else
   setGoVersion ${goversion}
+  addPath "$(go env GOPATH)/bin"
 fi
 ## / - Go version management
 
@@ -258,6 +260,9 @@ osource() {
     source "${tgt}"
   fi
 }
+
+## misc binaries
+addPath "$HOME/bin"
 
 ## homebrew
 addPath "/usr/local/sbin"
