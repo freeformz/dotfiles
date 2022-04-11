@@ -24,3 +24,5 @@
 	format = ssh
 [gpg "ssh"]
 	allowedSignersFile = __HOME__/.ssh/allowed_signers
+[pull]
+	rebase = true
