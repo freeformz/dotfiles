@@ -13,6 +13,8 @@ fi
 
 echo $situation
 
+brewbase=/opt/homebrew
+
 if [[ $(uname -s) =~ "Darwin" ]]; then
   SED=gsed
   requirements+=(age "brew install age")
@@ -24,8 +26,8 @@ if [[ $(uname -s) =~ "Darwin" ]]; then
   requirements+=(docker "https://docker.com")
   requirements+=(gsed "brew install gnu-sed")
   requirements+=(minisign "go install aead.dev/minisign/cmd/minisign@latest")
-  requirements+=(/usr/local/bin/brew "https://brew.sh")
-  requirements+=(/usr/local/bin/git "brew install git")
+  requirements+=(brew "https://brew.sh")
+  requirements+=(${brewbase}/bin/git "brew install git")
 fi
 
 if [[ $(uname -s) == "Linux" ]]; then
@@ -73,7 +75,8 @@ case ${situation} in
     export KEY="ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILDDc/726/BtTHZ6+EBCEOvRo2PRTIYzM3v/e48qj+4R emuller@fastly.com"
   ;;
   home)
-    export EMAIL=$EMAIL_HOME
+    export EMAIL=me@freeformz.me
+    export KEY="ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOqKdX6+mo5lSNZBCfm8wH+wZLZJoQp2fmX4rvT9vzcb freeformz@FFZ-Pro.local"
   ;;
   *)
     echo "unknown situation"
