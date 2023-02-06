@@ -63,6 +63,9 @@ files=(
   zshrc ~/.zshrc
   gitconfig ~/.gitconfig
   allowed_signers ~/.ssh/allowed_signers
+  direnvrc ~/.config/direnv/direnvrc
+  tmux.conf ~/.tmux.conf
+  alacritty.yml ~/.config/alacritty/alacritty.yml
 )
 
 base=$(git rev-parse --show-toplevel)
@@ -99,7 +102,9 @@ for f in ${(k)files}; do
   $SED -i -e "s:__EMAIL__:${EMAIL}:g" ${tmp}
   $SED -i -e "s:__KEY__:${KEY}:g" ${tmp}
 
-  # ensure the file exists or diff complains
+  # ensure the path & file exists or diff complains
+  base=$(dirname $tgt)
+  mkdir -p $base
   if [[ ! -e ${tgt} ]]; then
     touch ${tgt}
   fi

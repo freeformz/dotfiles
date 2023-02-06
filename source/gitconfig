@@ -24,5 +24,6 @@
 	format = ssh
 [gpg "ssh"]
 	allowedSignersFile = __HOME__/.ssh/allowed_signers
+	program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign
 [pull]
 	rebase = true
