@@ -27,6 +27,7 @@ if [[ $(uname -s) =~ "Darwin" ]]; then
   requirements+=(brew "https://brew.sh")
   requirements+=(${brewbase}/bin/git "brew install git")
   requirements+=(direnv "brew install direnv")
+  requirements+=(terminal-notifier "brew install terminal-notifier")
 fi
 
 if [[ $(uname -s) == "Linux" ]]; then
