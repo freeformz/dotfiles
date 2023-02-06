@@ -230,6 +230,7 @@ setGoVersion() {
   # delete any go sdk path items
   PATH="$(printf %s $PATH | awk -v RS=: -v ORS=: 'BEGIN { t="^'$HOME'/sdk/go[0-9]\.[0-9]{1,2}(\.[0-9]{1,2}){1,2}/bin$" } $1!~t { print }')"
   addPath ${gbd}
+  export GOROOT=$(go env GOROOT)
   goversion=${ver}
   echo "set $(go version | awk '{ print $1, $2, "to", $3, "on", $4 }')"
 }
