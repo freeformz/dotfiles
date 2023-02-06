@@ -27,7 +27,7 @@ colors:
 hide_cursor_when_typing: true
 
 shell:
-  program: /usr/local/bin/zsh
+  program: __BREW__/bin/zsh
   args:
     - --login
 key_bindings:

@@ -13,7 +13,7 @@ fi
 
 echo $situation
 
-brewbase=/opt/homebrew
+brewbase=$(dirname $(dirname $(which brew)))
 
 if [[ $(uname -s) =~ "Darwin" ]]; then
   SED=gsed
@@ -21,11 +21,9 @@ if [[ $(uname -s) =~ "Darwin" ]]; then
   requirements+=(git-lfs "brew install git-lfs")
   requirements+=(git-codereview "GO111MODULE=off go get -u golang.org/x/review/git-codereview")
   requirements+=(jq "brew install jq")
-  #requirements+=(keybase "https://keybase.io")
   requirements+=(code "F1 -> Install code command in PATH")
   requirements+=(docker "https://docker.com")
   requirements+=(gsed "brew install gnu-sed")
-  requirements+=(minisign "go install aead.dev/minisign/cmd/minisign@latest")
   requirements+=(brew "https://brew.sh")
   requirements+=(${brewbase}/bin/git "brew install git")
   requirements+=(direnv "brew install direnv")
@@ -67,6 +65,7 @@ files=(
   direnvrc ~/.config/direnv/direnvrc
   tmux.conf ~/.tmux.conf
   alacritty.yml ~/.config/alacritty/alacritty.yml
+  envrc ~/.envrc
 )
 
 base=$(git rev-parse --show-toplevel)
@@ -102,6 +101,7 @@ for f in ${(k)files}; do
   $SED -i -e "s:__HOME__:${HOME}:g" ${tmp}
   $SED -i -e "s:__EMAIL__:${EMAIL}:g" ${tmp}
   $SED -i -e "s:__KEY__:${KEY}:g" ${tmp}
+  $SED -i -e "s:__BREW__:${brewbase}:g" ${tmp}
 
   # ensure the path & file exists or diff complains
   base=$(dirname $tgt)

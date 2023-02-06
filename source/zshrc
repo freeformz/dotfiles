@@ -105,7 +105,10 @@ osource() {
 }
 
 ## misc binaries
+mkdir -p "$HOME/bin"
 addPath "$HOME/bin"
+mkdir -p "$HOME/go/bin"
+addPath "$HOME/go/bin"
 
 ## homebrew
 addPath "/usr/local/sbin"
@@ -149,3 +152,6 @@ osource '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion
 ## One password
 alias opm='eval $(op signin mullers)'
 alias opg='eval $(op signin gobridge)'
+
+## Direnv
+eval "$(direnv hook zsh)"
