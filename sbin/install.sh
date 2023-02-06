@@ -28,6 +28,7 @@ if [[ $(uname -s) =~ "Darwin" ]]; then
   requirements+=(minisign "go install aead.dev/minisign/cmd/minisign@latest")
   requirements+=(brew "https://brew.sh")
   requirements+=(${brewbase}/bin/git "brew install git")
+  requirements+=(direnv "brew install direnv")
 fi
 
 if [[ $(uname -s) == "Linux" ]]; then
