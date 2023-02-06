@@ -1,0 +1,102 @@
+export gosdk=$HOME/sdk
+mkdir -p ${gosdk}
+export goversion
+
+downloadGoVersion() {
+  local gv="${1}"
+  if [[ -z ${gv} ]]; then
+    echo "downloagGoVersion <version|latest>"
+    return 1
+  fi
+
+  if [[ "${gv}" == "latest" ]]; then
+    gv=$(curl -s https://golang.org/VERSION\?m=text)
+  fi
+
+  local arch=$(uname -m)
+  if [[ "${arch}" == "x86_64" ]]; then
+    arch="amd64"
+  fi
+  local sys=$(uname -s)
+  local sdk=$gosdk
+  local gdt=${sdk}/.dl
+  local gvd=${sdk}/${gv}
+  mkdir -p ${gdt}
+  if [[ -d ${gvd} ]]; then
+    rm -rf ${gvd}
+  fi
+  local url="https://dl.google.com/go/${gv}.${sys,,}-${arch}.tar.gz"
+  curl -Ls -S --fail ${url} | tar zxf - -C ${gdt}
+  local r=$?
+  if [[ ${r} != 0 ]]; then
+    >&2 echo "requested url: ${url}"
+    >&2 echo ""
+    rm -rf ${gdt}
+    return ${r}
+  fi
+  mv ${gdt}/go ${gvd} && echo "${gv} downloaded"
+  rm -rf ${gdt}
+}
+
+# Usage: use go <version>
+#
+# Loads the specified go version into the environment
+#
+use_go() {
+  local ver="${1}"
+  if [[ -z "${ver}" ]]; then
+    echo "use go <version|latest>"
+    return 1
+  fi
+  if [[ ${ver} == "latest" ]]; then
+    local verf=$(fetchurl https://golang.org/VERSION\?m=text)
+    ver=$(echo $verf)
+  fi
+  if [[ ! ${ver} =~ '^go' ]]; then
+    ver="go${ver}"
+  fi
+  local sdk="${gosdk}"
+  local gd="${sdk}/${ver}"
+  if [[ ! -d ${gd} ]]; then
+    echo "${ver} not found locally, downloading to ${gd}"
+    local downloaded=$(downloadGoVersion ${ver})
+    if [[ -z "${downloaded}" ]]; then
+      >&2 echo "Unable to install ${ver}"
+
+      local sys=$(uname -s)
+      local arch=$(uname -m)
+      if [[ "${arch}" == "x86_64" ]]; then
+        arch="amd64"
+      fi
+      local agv=$(curl -Ls https://golang.org/dl/\?mode\=json\&include\=all | jq '[ .[] | .files |= map(select(.kind == "archive" and .os == "'${sys,,}'" and .arch == "'${arch}'")) | select((.files | length) == 1)]' )
+      if [[ ${ver} != "latest" && -z "$(echo ${agv} | jq -r '.[] | select(.version == "'${ver}'")')" ]]; then
+        >&2 echo ""
+        >&2 echo "${ver} isn't available for ${sys,,}/${arch}"
+      fi
+      if [[ ! -z ${goversion} ]]; then
+        >&2 echo ""
+        >&2 echo "Current Local Go Version: ${goversion}"
+      fi
+      >&2 echo ""
+      >&2 echo -n "Local versions available: "
+      >&2 echo $(ls ${sdk})
+      >&2 echo ""
+      >&2 echo "Latest version: $(echo $agv | jq -r '.[0].version')"
+      >&2 echo ""
+      >&2 echo -n "All versions available for OS ($sys) & ARCH ($arch): "
+      >&2 echo $(echo $agv | jq -r '.[] | .version')
+      >&2 echo ""
+      return ${rv}
+    fi
+    echo "Success!"
+    ver=$(echo $downloaded | awk '{ print $2 }')
+  fi
+
+  local gbd="${gd}/bin"
+  PATH_rm ${gosdk}'/*'
+  PATH_add ${gbd}
+  export goversion=${ver}
+  export GOPATH=${HOME}/go
+  PATH_add ${GOPATH}/bin
+  echo "set $(go version | awk '{ print $1, $2, "to", $3, "on", $4 }')"
+}

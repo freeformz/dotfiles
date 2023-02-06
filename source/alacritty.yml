@@ -1,0 +1,86 @@
+font:
+  normal:
+    family: SF Mono
+    style: "Regular"
+  bold:
+    family: SF Mono
+    style: "Bold"
+  italic:
+    family: SF Mono
+    style: "Italic"
+  bold_italic:
+    family: SF Mono
+    style: "Bold Italic"
+  size: 16
+
+selection:
+  save_to_clipboard: true
+
+custom_cursor_colors: true
+colors:
+  primary:
+    background: '0x191919'
+    foreground: '0xeaeaea'
+  cursor:
+    text:   '0xf1c1c1'
+    cursor: '0xff2600'
+hide_cursor_when_typing: true
+
+shell:
+  program: /usr/local/bin/zsh
+  args:
+    - --login
+key_bindings:
+  - { key: Comma,     mods: Command,      command:
+      {program: "/usr/local/bin/code", args: [".config/alacritty/alacritty.yml"]}     }
+  - { key: N,         mods: Command,      action: SpawnNewInstance       }
+  #- { key: Space,     mods: Alt,          chars: " "                     }
+  #- { key: Back,      mods: Super, chars: "\x15" } # delete word/line
+  #- { key: Left,      mods: Alt,     chars: "\x1bb"                       } # one word left
+  #- { key: Right,     mods: Alt,     chars: "\x1bf"                       } # one word right
+  #- { key: Left,      mods: Command, chars: "\x1bOH",   mode: AppCursor   } # Home
+  #- { key: Right,     mods: Command, chars: "\x1bOF",   mode: AppCursor   } # End
+  - { key: Backslash, mods: Command|Shift,       chars: "\x06\x7c"} 
+  - { key: Minus,     mods: Command|Shift,       chars: "\x06\x2d" }
+  - { key: W,     mods: Command,       chars: "\x06\x78" }
+  - { key: T,     mods: Command,       chars: "\x06\x63" }
+  - { key: Key0,  mods: Command,       chars: "\x06\x30" }
+  - { key: Key1,  mods: Command,       chars: "\x06\x31" }
+  - { key: Key2,  mods: Command,       chars: "\x06\x32" }
+  - { key: Key3,  mods: Command,       chars: "\x06\x33" }
+  - { key: Key4,  mods: Command,       chars: "\x06\x34" }
+  - { key: Key5,  mods: Command,       chars: "\x06\x35" }
+  - { key: Key6,  mods: Command,       chars: "\x06\x36" }
+  - { key: Key7,  mods: Command,       chars: "\x06\x37" }
+  - { key: Key8,  mods: Command,       chars: "\x06\x38" }
+  - { key: Key9,  mods: Command,       chars: "\x06\x39" }
+  - { key: Left,  mods: Command,       chars: "\x06\x68" }
+  - { key: Down,  mods: Command,       chars: "\x06\x6a" }
+  - { key: Up,    mods: Command,       chars: "\x06\x6b" }
+  - { key: Right, mods: Command,       chars: "\x06\x6c" }
+
+
+hints:
+  alphabet: "jfkdls;ahgurieowpq"
+  enabled:
+    - regex: "(https?|ftp):[^\u0000-\u001F\u007F-\u009F<>\"\\s{-}\\^⟨⟩`]+"
+      hyperlinks: true
+      command: open
+      post_processing: true
+      mouse:
+        enabled: true
+        mods: None
+      binding:
+        key: U
+        mods: Control|Shift
+
+    - regex: '\S+:(\d+(:\d+)?)?'
+      hyperlinks: true
+      command: /Users/emuller/bin/code-go
+      post_processing: true
+      mouse:
+        enabled: true
+        mods: None
+      binding:
+        key: Q
+        mods: Control|Shift
