@@ -134,7 +134,6 @@ fi
 
 ## Misc 
 unalias gb
-alias gcdr="cd $(git rev-parse --show-toplevel)"
 
 ## Work specific
 if [ -f ~/.zshrc.work ]; then source ~/.zshrc.work; fi
