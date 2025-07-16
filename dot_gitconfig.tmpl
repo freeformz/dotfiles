@@ -1,0 +1,93 @@
+[user]
+        name = Edward Muller
+        email = {{ .email }}
+        signingkey = {{ .sshsig }}
+[core]
+        editor = code --wait
+        pager = delta
+        fsmonitor = true
+        untrackedcache = true
+	excludesfile = {{ .chezmoi.homeDir }}/.gitignore
+
+[filter "lfs"]
+        clean = git-lfs clean -- %f
+        smudge = git-lfs smudge -- %f
+        process = git-lfs filter-process
+        required = true
+
+[alias]
+        change = codereview change
+        gofmt = codereview gofmt
+        mail = codereview mail
+        pending = codereview pending
+        submit = codereview submit
+        sync = codereview sync
+	fpush = push
+
+[http]
+        cookiefile = {{ .chezmoi.homeDir }}/.gitcookies
+
+[commit]
+        gpgsign = true
+
+[gpg]
+        format = ssh
+
+[gpg "ssh"]
+        allowedSignersFile = {{ .chezmoi.homeDir }}/.ssh/allowed_signers
+        program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign
+
+[pull]
+        rebase = true
+
+[url "git@github.com:"]
+        insteadOf = https://github.com/
+
+[interactive]
+    diffFilter = delta --color-only --features=interactive
+
+[delta]
+    features = decorations side-by-side line-numbers
+    true-color = always
+    syntax-theme = Dracula
+    hyperlinks = true
+    hyperlinks-file-link-format = "vscode://file/{path}:{line}"
+    tabs = 1
+
+[merge]
+    conflictstyle = diff3
+
+[delta "interactive"]
+    keep-plus-minus-markers = false
+
+[delta "decorations"]
+    commit-decoration-style = bold yellow box ul
+    file-decoration-style = none
+    file-style = bold yellow ul
+    hunk-header-decoration-style = cyan box ul
+
+[delta "line-numbers"]
+    line-numbers-left-style = cyan
+    line-numbers-right-style = cyan
+    line-numbers-minus-style = 124
+    line-numbers-plus-style = 28
+
+[init]
+        defaultBranch = main
+
+[maintenance]
+        auto = false
+        strategy = incremental
+	repo = /Volumes/go/src/github.com/signalsciences/sigsci
+{{- if eq .email "emuller@fastly.com" }}
+[url "git@github.com:fastly"]
+	insteadof = https://github.com/fastly
+[url "git@github.com:signalsciences"]
+	insteadof = https://github.com/signalsciences
+{{- end }}
+[branch]
+	autosetuprebase = always
+[push]
+	default = current
+[advice]
+	skippedCherryPicks = false
