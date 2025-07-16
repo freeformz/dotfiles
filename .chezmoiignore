@@ -1,0 +1,10 @@
+{{- if ne .email "emuller@fastly.com" }}
+.config/fish/functions/kdata-storage.fish
+.config/fish/functions/kdev.fish
+.config/fish/functions/keventbus.fish
+.config/fish/functions/knotification-service.fish
+.config/fish/functions/kprde2.fish
+.config/fish/functions/kprdw2.fish
+.config/fish/functions/ksds.fish
+.config/fish/functions/kstg.fish
+{{- end }}
