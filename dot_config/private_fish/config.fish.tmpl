@@ -7,14 +7,14 @@ fish_add_path --path ~/.claude/local
 
 set -gx EDITOR code
 
-{{ if eq .chezmoi.email "emuller@fastly.com" }}
+{{ if eq .email "emuller@fastly.com" }}
 set -gx GOPRIVATE github.com/fastly,github.com/signalsciences
 set -x SSH_AUTH_SOCK "/Users/emuller/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
 {{ end }}
 
 if status is-interactive
     # Commands to run in interactive sessions can go here
-    {{ if eq .chezmoi.email "emuller@fastly.com" }}
+    {{ if eq .email "emuller@fastly.com" }}
     set -Ux INFRA_SERVER infra.plat.k8s.secretcdn.net
     set -Ux INFRA_PROVIDER okta
     set -Ux INFRA_SKIP_VERSION_CHECK true
