@@ -75,16 +75,17 @@
 [init]
         defaultBranch = main
 
+{{- if eq .email "emuller@fastly.com" }}
 [maintenance]
         auto = false
         strategy = incremental
 	repo = /Volumes/go/src/github.com/signalsciences/sigsci
-{{- if eq .email "emuller@fastly.com" }}
 [url "git@github.com:fastly"]
 	insteadof = https://github.com/fastly
 [url "git@github.com:signalsciences"]
 	insteadof = https://github.com/signalsciences
 {{- end }}
+
 [branch]
 	autosetuprebase = always
 [push]
