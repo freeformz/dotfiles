@@ -1,0 +1,32 @@
+fish_add_path --path ~/go/bin
+fish_add_path --path /opt/homebrew/bin
+fish_add_path --path ~/bin
+fish_add_path --path ~/go/sdk/go1.24/bin
+fish_add_path --path ~/.local/bin
+fish_add_path --path ~/.claude/local
+
+set -gx EDITOR code
+
+set -gx GOPRIVATE github.com/fastly,github.com/signalsciences
+
+set -x SSH_AUTH_SOCK "/Users/emuller/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+
+if status is-interactive
+    # Commands to run in interactive sessions can go here
+    set -Ux INFRA_SERVER infra.plat.k8s.secretcdn.net
+    set -Ux INFRA_PROVIDER okta
+    set -Ux INFRA_SKIP_VERSION_CHECK true
+
+    set -g direnv_fish_mode eval_on_arrow  
+    direnv hook fish | source
+    op completion fish | source
+
+    set -gx ATUIN_NOBIND "true"
+    atuin init fish | source
+
+    # bind to ctrl-r in normal and insert mode, add any other bindings you want here too
+    bind \cr _atuin_search
+    bind -M insert \cr _atuin_search
+end
+
+set -xg GIT_DISCOVERY_ACROSS_FILESYSTEM true
