@@ -5,11 +5,12 @@ fish_add_path --path ~/go/sdk/go1.24/bin
 fish_add_path --path ~/.local/bin
 fish_add_path --path ~/.claude/local
 
-set -gx EDITOR code
+set -gx EDITOR code -w
 
 {{- if eq .email "emuller@fastly.com" }}
 set -gx GOPRIVATE github.com/fastly,github.com/signalsciences
 set -x SSH_AUTH_SOCK "/Users/emuller/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+fish_add_path --path $HOME/.krew/bin
 {{- end }}
 
 if status is-interactive
