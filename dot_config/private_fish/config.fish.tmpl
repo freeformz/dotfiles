@@ -22,7 +22,9 @@ if status is-interactive
 
     set -g direnv_fish_mode eval_on_arrow  
     direnv hook fish | source
-    op completion fish | source
+
+    type -q op
+    and op completion fish | source
 
     set -gx ATUIN_NOBIND "true"
     atuin init fish | source

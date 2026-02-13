@@ -1,4 +1,4 @@
 font-family = SF Mono
 font-size = 16
 background = #000000
-scrollback-limit = 400000
+scrollback-limit = 4000000
