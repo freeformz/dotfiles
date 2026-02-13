@@ -1,7 +1,5 @@
-fish_add_path --path ~/go/bin
 fish_add_path --path /opt/homebrew/bin
 fish_add_path --path ~/bin
-fish_add_path --path ~/go/sdk/go1.24/bin
 fish_add_path --path ~/.local/bin
 fish_add_path --path ~/.claude/local
 
@@ -11,6 +9,7 @@ set -gx EDITOR code -w
 set -gx GOPRIVATE github.com/fastly,github.com/signalsciences
 set -x SSH_AUTH_SOCK "/Users/emuller/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
 fish_add_path --path $HOME/.krew/bin
+set -gx QUERY_TOKEN {{ onepasswordRead "op://Employee/query/password" }}
 {{- end }}
 
 if status is-interactive
@@ -34,3 +33,13 @@ if status is-interactive
 end
 
 set -xg GIT_DISCOVERY_ACROSS_FILESYSTEM true
+
+# Added by LM Studio CLI (lms)
+set -gx PATH $PATH /Users/emuller/.lmstudio/bin
+# End of LM Studio CLI section
+
+if status is-interactive
+  mise activate fish | source
+else
+  mise activate fish --shims | source
+end

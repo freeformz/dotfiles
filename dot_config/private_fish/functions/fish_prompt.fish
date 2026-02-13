@@ -82,7 +82,8 @@ function fish_prompt
     _nim_prompt_wrapper $retc '' (date +%X)
     _nim_prompt_wrapper $retc 'UTC' (date -u +%X)
 
-    _nim_prompt_wrapper $retc '' (go version | cut -d \  -f 3)
+    type -q go
+    and _nim_prompt_wrapper $retc '' (go version | cut -d \  -f 3)
     
     # Vi-mode
     # The default mode prompt would be prefixed, which ruins our alignment.
