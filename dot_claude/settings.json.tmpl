@@ -11,8 +11,8 @@
       "Bash(cat:*)",
       "Bash(staticcheck:*)",
       "Bash(gofumpt:*)",
-      "Bash(tree:*)",
-{{ if eq .email "emuller@fastly.com" }}{{ onepasswordRead "op://Employee/chezmoi private bits/claude-settings-permissions" -}}{{- end }}
+      "Bash(tree:*)"{{ if eq .email "emuller@fastly.com" }},
+      {{ onepasswordRead "op://Employee/chezmoi private bits/claude-settings-permissions" -}}{{- end }}
     ],
     "deny": [],
     "ask": [],
