@@ -1,0 +1,50 @@
+{
+{{ if eq .email "emuller@fastly.com" }}{{ onepasswordRead "op://Employee/chezmoi private bits/claude-settings-toplevel" | indent 2 -}}{{- end }},
+  "env": {
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"{{- if eq .email "emuller@fastly.com" }},
+{{ onepasswordRead "op://Employee/chezmoi private bits/claude-settings-env" -}}{{- end }}
+  },
+  "permissions": {
+    "allow": [
+      "Bash(go doc:*)",
+      "Bash(go vet:*)",
+      "Bash(cat:*)",
+      "Bash(staticcheck:*)",
+      "Bash(gofumpt:*)",
+      "Bash(tree:*)",
+{{ if eq .email "emuller@fastly.com" }}{{ onepasswordRead "op://Employee/chezmoi private bits/claude-settings-permissions" -}}{{- end }}
+    ],
+    "deny": [],
+    "ask": [],
+    "defaultMode": "plan"
+  },
+  "model": "opus",
+  "hooks": {
+    "Notification": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/opt/homebrew/bin/jq -r '.message' | /opt/homebrew/bin/terminal-notifier -appIcon ~/images/claude.png -ignoreDnD -title Claude -subtitle Finished"
+          }
+        ]
+      }
+    ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "~/.claude/statusline.sh"
+  },
+  "enabledPlugins": {
+    "code-review@claude-plugins-official": true,
+    "gopls-lsp@fastly-claude-plugins": true
+  },
+  "alwaysThinkingEnabled": true,
+  "trustedMCPServers": [
+    "github",
+    "gopls",
+    "git",
+    "jira-sse"
+  ]
+}
