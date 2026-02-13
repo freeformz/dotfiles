@@ -1,5 +1,5 @@
 {
-{{ if eq .email "emuller@fastly.com" }}{{ onepasswordRead "op://Employee/chezmoi private bits/claude-settings-toplevel" | indent 2 -}}{{- end }},
+{{ if eq .email "emuller@fastly.com" }}{{ onepasswordRead "op://Employee/chezmoi private bits/claude-settings-toplevel" | indent 2 -}},{{- end }}
   "env": {
     "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"{{- if eq .email "emuller@fastly.com" }},
 {{ onepasswordRead "op://Employee/chezmoi private bits/claude-settings-env" -}}{{- end }}
