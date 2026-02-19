@@ -9,6 +9,9 @@ INPUT_TOKENS=$(echo "$input" | jq -r '.context_window.total_input_tokens // 0')
 OUTPUT_TOKENS=$(echo "$input" | jq -r '.context_window.total_output_tokens // 0')
 DURATION_MS=$(echo "$input" | jq -r '.cost.total_duration_ms // 0')
 
+# Get current working directory (shorten home prefix to ~)
+CWD="${PWD/#$HOME/~}"
+
 # Format cost
 COST_FMT=$(printf "%.4f" "$COST")
 
@@ -34,8 +37,16 @@ fi
 CYAN='\033[36m'
 GREEN='\033[32m'
 YELLOW='\033[33m'
+ORANGE='\033[38;5;208m'
 MAGENTA='\033[35m'
 RESET='\033[0m'
 
+# Use orange for context if > 70%
+if (( $(echo "$CONTEXT_PERCENT > 70" | bc -l) )); then
+    CTX_COLOR=$ORANGE
+else
+    CTX_COLOR=$YELLOW
+fi
+
 # Output status line
-echo -e "${CYAN}[$MODEL]${RESET} ${GREEN}\$${COST_FMT}${RESET} | ${YELLOW}${CONTEXT_FMT}%${RESET} ctx | ${MAGENTA}${DURATION_FMT}${RESET} | ${INPUT_TOKENS}/${OUTPUT_TOKENS} tok"
+echo -e "${GREEN}${CWD}${RESET} | ${CYAN}[$MODEL]${RESET} ${GREEN}\$${COST_FMT}${RESET} | ${CTX_COLOR}${CONTEXT_FMT}%${RESET} ctx | ${MAGENTA}${DURATION_FMT}${RESET} | ${INPUT_TOKENS}/${OUTPUT_TOKENS} tok"
